@@ -1,12 +1,16 @@
-import { Col, Row } from "antd";
 import React from "react";
+import { Col, Row } from "antd";
 
 const Transaction = (props) => {
-  const { isExpense, title, value } = props;
+  const { isExpense, title, value, onDelete, id, onEdit } = props;
   const bgColor = isExpense ? "bg-red-500" : "bg-green-500";
+
+  const onDeleteHandler = () => {
+    onDelete(id);
+  };
   return (
     <>
-      <Row className="lg:w-2/4 md:w-full my-3 px-10">
+      <Row className="w-full my-3 px-10">
         <Col flex={1}>
           <div
             className={`flex justify-between bg-opacity-50 p-5 rounded-xl ${bgColor}`}
@@ -14,10 +18,18 @@ const Transaction = (props) => {
             <span className="font-bold">{title}</span>
             <div className="">
               <span className="font-bold">${value}</span>
-              <span className="font-bold ml-5 px-5 p-2 cursor-pointer bg-white rounded-lg">
+              <span
+                className="font-bold ml-5 px-5 p-2 cursor-pointer bg-white rounded-lg"
+                onClick={() => {
+                  onEdit(id);
+                }}
+              >
                 Edit
               </span>
-              <span className="font-bold ml-5 px-5 p-2 cursor-pointer bg-white rounded-lg">
+              <span
+                className="font-bold ml-5 px-5 p-2 cursor-pointer bg-white rounded-lg"
+                onClick={onDeleteHandler}
+              >
                 Delete
               </span>
             </div>

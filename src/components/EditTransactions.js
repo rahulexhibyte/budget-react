@@ -1,10 +1,11 @@
-import { Button, Form, Input, InputNumber, Select } from "antd";
+import { Form, Input, InputNumber, Select } from "antd";
 import React, { useState } from "react";
 
 const { Option } = Select;
 
 const AddTransForm = (props) => {
-  const [tType, setTType] = useState("income");
+  const { description, isExpense, value } = props.selectedItem;
+  const [tType, setTType] = useState(isExpense ? "expense" : "income");
   const onFinishHandler = (data) => {
     props.onSubmit({
       ...data,
@@ -13,21 +14,25 @@ const AddTransForm = (props) => {
   };
 
   const onMenuChangeHandler = (key) => {
-    console.log(key);
     setTType(key);
   };
 
   return (
     <>
-      <div className="m-5">
-        <div className="font-bold text-lg pb-5">Add New Transaction</div>
+      <div className="m-1">
+        <div className="font-bold text-lg pb-5">Edit Transaction</div>
         <Form
           onFinish={onFinishHandler}
           layout="vertical"
           className="flex flex-col lg:w-1/2 md:w-1/2 font-bold"
         >
-          <Form.Item label="Description" colon={true} name="description">
-            <Input placeholder="Enter Description" />
+          <Form.Item
+            label="Description"
+            colon={true}
+            name="description"
+            defaultValue={description}
+          >
+            <Input placeholder="Enter Description" value={description} />
           </Form.Item>
           <Form.Item label="Transaction Type">
             <Select
@@ -45,15 +50,13 @@ const AddTransForm = (props) => {
             <InputNumber
               min={1}
               placeholder="value"
+              defaultValue={value}
               formatter={(value) =>
                 `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               }
               parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
             />
           </Form.Item>
-          <Button type="primary" className="w-6/12" htmlType="submit">
-            Submit
-          </Button>
         </Form>
       </div>
     </>

@@ -5,7 +5,7 @@ const BalanceHeader = (props) => {
   const { income, expenses } = props;
   return (
     <>
-      <Row className="lg:w-2/4 md:w-full m-3">
+      <Row className="w-full m-3">
         <Col flex={3}>
           <div className="flex flex-col text-center font-bold">
             <span className="text-lg">Incoming</span>
